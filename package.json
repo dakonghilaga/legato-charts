@@ -1,0 +1,30 @@
+{
+  "name": "legato-charts",
+  "license": "ISC",
+  "scripts": {
+    "start": "npm run setup | npm run turbo-start",
+    "setup": "bash ./bin/setup.sh mongodb redis",
+    "turbo-start": "turbo run development",
+    "prepare": "./node_modules/.bin/husky"
+  },
+  "devDependencies": {
+    "husky": "9.1.6",
+    "react": "18.3.1",
+    "react-dom": "18.3.0",
+    "turbo": "2.0.6"
+  },
+  "optionalDependencies": {
+    "turbo-darwin-64": "2.0.6",
+    "turbo-darwin-arm64": "2.0.6",
+    "turbo-linux-64": "2.0.6",
+    "turbo-linux-arm64": "2.0.6",
+    "turbo-windows-64": "2.0.6",
+    "turbo-windows-arm64": "2.0.6"
+  },
+  "engines": {
+    "node": ">= 20.11.1",
+    "yarn": "please-use-pnpm",
+    "pnpm": ">=9.5.0"
+  },
+  "packageManager": "pnpm@9.5.0"
+}

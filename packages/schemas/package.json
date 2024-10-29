@@ -1,0 +1,30 @@
+{
+  "name": "schemas",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "test:tsc": "tsc --noEmit",
+    "test:eslint": "eslint \"**/*.ts\" --fix",
+    "precommit": "lint-staged"
+  },
+  "dependencies": {
+    "enums": "workspace:*",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.2",
+    "eslint": "8.57.0",
+    "eslint-config-custom": "workspace:*",
+    "lint-staged": "15.2.10",
+    "prettier": "3.3.3",
+    "prettier-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "5.2.2"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix"
+    ]
+  }
+}

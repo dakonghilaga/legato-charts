@@ -1,0 +1,25 @@
+{
+  "name": "enums",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "ts-lint": "tsc --noEmit && eslint \"**/*.ts\" --quiet --fix",
+    "precommit": "lint-staged"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.2",
+    "eslint": "8.57.0",
+    "eslint-config-custom": "workspace:*",
+    "lint-staged": "15.2.10",
+    "prettier": "3.3.3",
+    "prettier-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "5.2.2"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix"
+    ]
+  }
+}

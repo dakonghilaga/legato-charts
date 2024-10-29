@@ -1,0 +1,72 @@
+{
+  "name": "legato-charts-api",
+  "version": "0.0.0",
+  "description": "Koa.js API",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "test": "run-s test:**",
+    "test:tsc": "tsc --noEmit",
+    "test:eslint": "eslint \"**/*.ts\" --fix",
+    "test:unit": "jest --runInBand -c ./jest.config.js --collectCoverage false",
+    "dev": "NODE_ENV=development APP_ENV=development ts-node-dev --respawn --transpile-only src/app.ts",
+    "start": "ts-node src/app.ts",
+    "precommit": "lint-staged"
+  },
+  "dependencies": {
+    "@koa/cors": "5.0.0",
+    "@koa/router": "13.0.0",
+    "@paralect/node-mongo": "3.2.0",
+    "app-constants": "workspace:*",
+    "app-types": "workspace:*",
+    "app-utils": "workspace:*",
+    "dotenv": "16.0.3",
+    "ioredis": "5.3.2",
+    "koa": "2.14.1",
+    "koa-bodyparser": "4.3.0",
+    "koa-compose": "4.1.0",
+    "koa-helmet": "6.1.0",
+    "koa-logger": "3.2.1",
+    "koa-mount": "4.0.0",
+    "koa-qs": "3.0.0",
+    "koa-ratelimit": "5.0.1",
+    "lodash": "4.17.21",
+    "module-alias": "2.2.2",
+    "schemas": "workspace:*",
+    "winston": "3.8.2",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@shelf/jest-mongodb": "4.2.0",
+    "@types/jest": "29.5.12",
+    "@types/koa": "2.13.5",
+    "@types/koa-bodyparser": "4.3.10",
+    "@types/koa-compose": "3.2.5",
+    "@types/koa-helmet": "6.0.4",
+    "@types/koa-logger": "3.1.2",
+    "@types/koa-mount": "4.0.2",
+    "@types/koa-ratelimit": "5.0.0",
+    "@types/koa__cors": "3.3.1",
+    "@types/koa__router": "12.0.0",
+    "@types/lodash": "4.14.191",
+    "@types/module-alias": "2.0.1",
+    "@types/node": "20.11.1",
+    "eslint": "*",
+    "eslint-config-custom": "workspace:*",
+    "jest": "29.7.0",
+    "lint-staged": "13.2.0",
+    "mongodb-memory-server": "8.12.0",
+    "prettier": "3.2.5",
+    "prettier-config-custom": "workspace:*",
+    "ts-jest": "29.1.2",
+    "ts-node": "10.9.1",
+    "ts-node-dev": "2.0.0",
+    "tsconfig": "workspace:*",
+    "typescript": "5.2.2"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix"
+    ]
+  }
+}
