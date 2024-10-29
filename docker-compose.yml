@@ -1,0 +1,51 @@
+services:
+  mongodb:
+    image: mongodb/mongodb-atlas-local:7.0
+    container_name: legato-charts-mongodb
+    networks:
+      - legato-charts-network
+    ports:
+      - "27017:27017"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - type: volume
+        source: mongodb
+        target: /data/db
+      - type: volume
+        source: mongodb-cfg
+        target: /data/configdb
+  redis:
+    image: redis:7.4.0
+    container_name: legato-charts-redis
+    command: redis-server --appendonly yes
+    hostname: redis
+    networks:
+      - legato-charts-network
+    ports:
+      - "6379:6379"
+  legato-charts-api:
+    container_name: legato-charts-api
+    build:
+      context: .
+      dockerfile: projects/api/Dockerfile
+      target: development
+      args:
+        NODE_ENV: development
+        APP_ENV: development
+    networks:
+      - legato-charts-network
+    volumes:
+      - ./projects/api/src:/app/projects/api/src
+    ports:
+      - "3001:3001"
+    depends_on:
+      - redis
+      - mongodb
+networks:
+  legato-charts-network:
+    name: legato-charts-network
+
+volumes:
+  mongodb:
+  mongodb-cfg:
