@@ -31,7 +31,7 @@ async function handler(ctx: AppKoaContext) {
     parsedRows.push(row);
   }
 
-  ctx.body = parsedRows;
+  ctx.body = { count: parsedRows.length, results: parsedRows };
 }
 
 export default (router: AppRouter) => {
