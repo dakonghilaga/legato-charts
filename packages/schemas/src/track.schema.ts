@@ -34,5 +34,10 @@ export const trackSchema = dbSchema
         }),
       )
       .optional(),
+
+    dataSource: z.enum(['csv']).optional(),
+
+    // TODO: Preprocess types depending on data source value
+    dataSourceAttributes: z.record(z.string()),
   })
   .strict();

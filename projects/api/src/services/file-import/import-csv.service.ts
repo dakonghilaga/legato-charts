@@ -13,6 +13,7 @@ const importCsv = async (file: File) => {
 
     // https://csv.js.org/parse/api/async_iterator/
     return parse(data, {
+      trim: true,
       columns: (header) => header.map((column: string) => column.toLowerCase()),
     });
   } catch (e) {
