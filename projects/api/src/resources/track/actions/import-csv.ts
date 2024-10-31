@@ -2,11 +2,13 @@ import multer from '@koa/multer';
 
 import { trackService } from 'resources/track';
 
-import { fileImportService } from 'services';
+import { csvFileImportService } from 'services';
 
 import logger from 'logger';
 
-import { AppKoaContext, AppRouter, Next } from 'types';
+import { AppKoaContext, AppRouter, Next, TrackCsvRow } from 'types';
+
+import saveTrackReferencesWorkflow from '../workflows/save-track-references.workflow';
 
 const upload = multer();
 
@@ -24,34 +26,15 @@ async function validator(ctx: AppKoaContext, next: Next) {
   await next();
 }
 
-type TrackCsvRow = {
-  song: string;
-
-  /* eslint-disable @typescript-eslint/naming-convention */
-  artist_name_label: string;
-  artist_main: string;
-  artist_others: string;
-  album_release_year: string;
-  /* eslint-enable @typescript-eslint/naming-convention */
-
-  album: string;
-  writer: string;
-} & {
-  [k in `total_plays_month_${string}`]: string;
-};
-
 async function handler(ctx: AppKoaContext) {
   const { file } = ctx.request;
 
-  const parsedTracksPromises = await fileImportService.importCsv(file);
+  const parsedTracksPromises = await csvFileImportService.importCsv(file);
 
   const parsedTracksRows = [];
-  const savedTrackRows = [];
 
   for await (const csvRow of parsedTracksPromises) {
     const row = csvRow as TrackCsvRow;
-
-    parsedTracksRows.push(row);
 
     const trackExists = await trackService.exists({
       name: row.song,
@@ -64,23 +47,22 @@ async function handler(ctx: AppKoaContext) {
     }
 
     if (!trackExists) {
-      const { _id, name, artistNameLabel } = await trackService.insertOne({
+      await trackService.insertOne({
         name: row.song,
         artistNameLabel: row.artist_name_label,
         dataSource: 'csv',
         dataSourceAttributes: row,
       });
-
-      savedTrackRows.push({ _id, name, artistNameLabel });
     }
+
+    await saveTrackReferencesWorkflow(row);
+
+    parsedTracksRows.push(row);
   }
 
   ctx.body = {
-    count: savedTrackRows.length,
-    metadata: {
-      sourceCount: parsedTracksRows.length,
-    },
-    results: savedTrackRows,
+    count: parsedTracksRows.length,
+    results: parsedTracksRows,
   };
 }
 
