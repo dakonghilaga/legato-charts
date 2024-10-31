@@ -22,4 +22,4 @@ const importCsv = async (file: File) => {
   }
 };
 
-export default { importCsv };
+export default importCsv;

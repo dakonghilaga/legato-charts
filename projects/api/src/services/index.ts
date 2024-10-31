@@ -1,4 +1,4 @@
-import fileImportService from './file-import/import-csv.service';
+import * as csvFileImportService from './file-import/csv/index';
 import rateLimitService from './rate-limit/rate-limit.service';
 
-export { fileImportService, rateLimitService };
+export { csvFileImportService, rateLimitService };

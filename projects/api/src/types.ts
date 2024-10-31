@@ -34,3 +34,19 @@ export type MongoSearchFilters = {
   perPage: number;
   searchValue?: string | undefined;
 };
+
+export type TrackCsvRow = {
+  song: string;
+
+  /* eslint-disable @typescript-eslint/naming-convention */
+  artist_name_label: string;
+  artist_main: string;
+  artist_others: string;
+  album_release_year: string;
+  /* eslint-enable @typescript-eslint/naming-convention */
+
+  album: string;
+  writer: string;
+} & {
+  [k in `total_plays_month_${string}`]: string;
+};
