@@ -4,11 +4,16 @@ import dbSchema from './db.schema';
 
 export const reportTrackPlaySchema = dbSchema
   .extend({
+    trackNameLabel: z.string().min(1), // artist name(s) for display
+    albumNameLabel: z.string().min(1), // album name(s) for display
+
     // denormalise data from track schema
-    track: z.object({
-      _id: z.string(),
-      name: z.string(),
-    }),
+    track: z
+      .object({
+        _id: z.string().optional(),
+        name: z.string().optional(),
+      })
+      .optional(),
 
     // denormalise data from album schema
     album: z
@@ -33,5 +38,10 @@ export const reportTrackPlaySchema = dbSchema
       .number()
       .safe() // within MIN_SAFE_INTEGER and MAX_SAFE_INTEGER
       .nonnegative(), //  >= 0
+
+    dataSource: z.enum(['csv']).optional(),
+
+    // TODO: Preprocess types depending on data source value
+    dataSourceAttributes: z.record(z.string()),
   })
   .strict();

@@ -8,6 +8,7 @@ import logger from 'logger';
 
 import { AppKoaContext, AppRouter, Next, TrackCsvRow } from 'types';
 
+import savePlayCountsWorkflow from '../workflows/save-play-counts.workflow';
 import saveTrackReferencesWorkflow from '../workflows/save-track-references.workflow';
 
 const upload = multer();
@@ -50,12 +51,15 @@ async function handler(ctx: AppKoaContext) {
       await trackService.insertOne({
         name: row.song,
         artistNameLabel: row.artist_name_label,
+        albumNameLabel: row.album,
         dataSource: 'csv',
         dataSourceAttributes: row,
       });
     }
 
     await saveTrackReferencesWorkflow(row);
+
+    await savePlayCountsWorkflow(row);
 
     parsedTracksRows.push(row);
   }

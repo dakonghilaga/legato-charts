@@ -3,4 +3,5 @@ export const DATABASE_DOCUMENTS = {
   ALBUMS: 'albums',
   WRITERS: 'writers',
   ARTISTS: 'artists',
+  REPORTS_TRACK_PLAY: 'reports_track_play',
 };

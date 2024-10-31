@@ -6,6 +6,7 @@ export const trackSchema = dbSchema
   .extend({
     name: z.string().min(1),
     artistNameLabel: z.string().min(1), // artist name(s) for display
+    albumNameLabel: z.string().min(1), // album name(s) for display
 
     // denormalise data from album schema
     album: z
