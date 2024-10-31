@@ -1,3 +1,4 @@
 import trackRoutes from './track.routes';
+import trackService from './track.service';
 
-export { trackRoutes };
+export { trackRoutes, trackService };
