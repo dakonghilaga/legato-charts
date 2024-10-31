@@ -43,6 +43,7 @@ export type TrackCsvRow = {
   artist_main: string;
   artist_others: string;
   album_release_year: string;
+  year_counted: string;
   /* eslint-enable @typescript-eslint/naming-convention */
 
   album: string;
