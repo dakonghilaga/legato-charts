@@ -4,10 +4,18 @@ import { writerService } from 'resources/writer';
 
 import db from 'db';
 
+import logger from 'logger';
+
 import { TrackCsvRow } from 'types';
 
-// Save to DB the track's referenced album, artist, writer
-// TODO: Should be a separate service / worker
+/**
+ * Save to DB the track's referenced album, artist, writer
+ * Uses MongoDB transactions https://www.mongodb.com/docs/manual/core/transactions/
+ * Via: https://www.npmjs.com/package/@paralect/node-mongo#transactions-api
+ *
+ * TODO: Should separate each saves to a more testable structure
+ * TODO: Should be a separate service / worker
+ */
 const saveTrackReferencesWorkflow = async (row: TrackCsvRow) => {
   /** Save Album * */
   await db.withTransaction(async (session) => {
@@ -20,6 +28,10 @@ const saveTrackReferencesWorkflow = async (row: TrackCsvRow) => {
       {},
       { session },
     );
+
+    if (albumExists) {
+      logger.info(`Album '${row.album}' exists, skipping...`);
+    }
 
     if (!albumExists) {
       await albumService.insertOne(
@@ -46,6 +58,10 @@ const saveTrackReferencesWorkflow = async (row: TrackCsvRow) => {
         const artistExists = await artistService.exists({
           name: artistName,
         });
+
+        if (artistExists) {
+          logger.info(`Artist '${artistName}' exists, skipping...`);
+        }
 
         if (!artistExists) {
           // eslint-disable-next-line no-await-in-loop
@@ -74,6 +90,10 @@ const saveTrackReferencesWorkflow = async (row: TrackCsvRow) => {
           },
           {},
         );
+
+        if (writerExists) {
+          logger.info(`Writer '${writerName}' exists, skipping...`);
+        }
 
         if (!writerExists) {
           await writerService.insertOne(
