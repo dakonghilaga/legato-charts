@@ -13,18 +13,24 @@
 
 ```text
 api/
-├─ config/            # API configurations, ENVs, ENV validations etc.
-├─ middlewares/       # Sets top-level middlewares, eg: rate-limit, validations 
-├─ resources/         # Resource components: REST API, business logic, DB access, events, etc.
-├─ routes/            # Koa routes and custom middlewares; Also manages private and public routes
-├─ services/          # Shared services that could be used across this project boundaries
-├─ utils/             # Shared utilities and helpers
-├─ app.ts             # Project entry point
-├─ db.ts              # MongoDB connection
-├─ *.d.ts             # TS declarations for imported JS dependencies
-├─ logger.ts          # Global logger instance
-├─ redis-client.ts    # Redis client for rate limiter, etc.
-├─ types.ts           # Project-wide TS types
+├─ config/               # API configurations, ENVs, ENV validations etc.
+├─ middlewares/          # Sets top-level middlewares, eg: rate-limit, validations 
+├─ resources/            # Resource components
+   ├─ {resource}/        # REST API, business logic, DB access, events, etc.
+      ├─ actions/        # HTTP handlers
+      ├─ index.ts        # Resource entry point
+      ├─ *.routes.ts     # Resource mounted Koa routes
+      ├─ *.services.ts   # Database logic functions
+      ├─ *.handler.ts    # Event handlers
+├─ routes/               # Koa routes and custom middlewares; Also manages private and public routes
+├─ services/             # Shared services that could be used across this project boundaries
+├─ utils/                # Shared utilities and helpers
+├─ app.ts                # Project entry point
+├─ db.ts                 # MongoDB connection
+├─ *.d.ts                # TS declarations for imported JS dependencies
+├─ logger.ts             # Global logger instance
+├─ redis-client.ts       # Redis client for rate limiter, etc.
+├─ types.ts              # Project-wide TS types
 ```
 
 ### Core Components
