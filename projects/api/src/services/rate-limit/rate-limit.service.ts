@@ -11,6 +11,7 @@ const rateLimiter = (limitDuration: number, requestsPerDuration: number): Return
     db: redisClient,
     duration: limitDuration,
     max: requestsPerDuration,
+    // TODO: Pass user auth token here
     id: (ctx: ParameterizedContext) => ctx.ip,
     errorMessage,
     disableHeader: false,
