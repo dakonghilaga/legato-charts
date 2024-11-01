@@ -1,3 +1,4 @@
+import reportRoutes from './report.routes';
 import reportTrackPlayService from './report-track-play.service';
 
-export { reportTrackPlayService };
+export { reportRoutes, reportTrackPlayService };

@@ -9,4 +9,6 @@ const service = db.createService<ReportTrackPlay>(DATABASE_DOCUMENTS.REPORTS_TRA
   schemaValidator: (obj) => reportTrackPlaySchema.parseAsync(obj),
 });
 
-export default Object.assign(service, {});
+const trackStats = async (pipeline: [object, ...object[]]) => service.aggregate(pipeline);
+
+export default Object.assign(service, { trackStats });
