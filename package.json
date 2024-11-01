@@ -1,6 +1,6 @@
 {
   "name": "legato-charts",
-  "license": "ISC",
+  "license": "TBD",
   "scripts": {
     "start": "npm run setup | npm run turbo-start",
     "setup": "bash ./bin/setup.sh mongodb redis",
