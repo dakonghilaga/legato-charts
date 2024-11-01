@@ -2,7 +2,6 @@
   "name": "legato-charts-api",
   "version": "0.0.0",
   "description": "Koa.js API",
-  "license": "ISC",
   "scripts": {
     "build": "tsc",
     "test": "run-s test:**",
