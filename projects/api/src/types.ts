@@ -32,6 +32,7 @@ export type MongoSearchFilters = {
   page: number;
   sort: { [index: string]: number } | undefined;
   perPage: number;
+  filter?: { [index: string]: unknown } | undefined;
   searchValue?: string | undefined;
 };
 

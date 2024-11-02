@@ -53,6 +53,7 @@ async function handler(ctx: AppKoaContext) {
         artistNameLabel: row.artist_name_label,
         artistName: row.artist_main,
         albumName: row.album,
+        releaseYear: row.album_release_year,
         dataSource: 'csv',
         dataSourceAttributes: row,
       });

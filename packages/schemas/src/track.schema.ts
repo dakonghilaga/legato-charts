@@ -25,6 +25,7 @@ const trackSPrimarySchema = dbSchema
     artistNameLabel: z.string().min(1), // artist name(s) for display
     albumName: z.string().optional(),
     artistName: z.string().min(1),
+    releaseYear: z.coerce.number().optional(),
 
     // TODO: Add denormalise data from album schema
     album: z.object({}).optional(),
@@ -32,6 +33,7 @@ const trackSPrimarySchema = dbSchema
     // TODO: Add  denormalise data from artist schema
     mainArtists: z.array(z.object({}).optional()).optional(),
 
+    // TODO: Add denormalise data from artist schema
     otherArtists: z.array(z.object({}).optional()).optional(),
 
     dataSource: z.enum(['csv']).optional(),
