@@ -24,7 +24,7 @@ async function validator(ctx: AppKoaContext, next: Next) {
 
   const isSupportedReport = checkSupportedReport(reportName);
 
-  ctx.assertClientError(isSupportedReport, { global: 'Report name is not supported.' });
+  ctx.assertClientError(isSupportedReport, { global: `Report '${reportName}' is currently not supported.` });
 
   await next();
 }
@@ -34,11 +34,12 @@ async function handler(ctx: AppKoaContext) {
 
   const pipeline = getTrackStatsPipeline(reportName, filter?.dateByPrecision);
 
-  const results = await reportTrackPlayService.trackStats(pipeline);
+  // Extract the result object from aggregation result array
+  const [result] = await reportTrackPlayService.trackStats(pipeline);
 
-  ctx.body = {
-    results,
-  };
+  // Returns the reportName key with value 0 if no results found
+  // TODO: Standardised report results structure
+  ctx.body = result || { [reportName]: 0 };
 }
 
 export default (router: AppRouter) => {
