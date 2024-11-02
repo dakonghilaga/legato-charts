@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 const buildDateFilter = (month?: number, year = 2024, precision = 'month') => ({
   'dateAttributes.month': month,
   'dateAttributes.year': year,
