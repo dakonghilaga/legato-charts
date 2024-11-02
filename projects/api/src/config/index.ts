@@ -16,6 +16,8 @@ const schema = z.object({
 
   REDIS_URI: z.string().optional(),
   REDIS_ERRORS_POLICY: z.enum(['throw', 'log']).default('log'),
+
+  DEMO_API_KEY: z.string().optional().default('3.1415926535'),
 });
 
 type Config = z.infer<typeof schema>;
