@@ -37,6 +37,7 @@ const saveTrackReferencesWorkflow = async (row: TrackCsvRowRaw) => {
       await albumService.insertOne(
         {
           name: row.album,
+          artistName: row.artist_main,
           releaseYear: Number(row.album_release_year),
           dataSource: 'csv',
           dataSourceAttributes: row,

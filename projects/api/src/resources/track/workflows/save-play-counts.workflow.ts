@@ -18,7 +18,8 @@ const savePlayCountsWorkflow = async (row: TrackCsvRowRaw) => {
 
       const reportTrackExists = await reportTrackPlayService.findOne({
         trackNameLabel: row.song,
-        albumNameLabel: row.album,
+        albumName: row.album,
+        artistName: row.artist_main,
         dateAttributes: {
           month,
           year,
@@ -33,7 +34,8 @@ const savePlayCountsWorkflow = async (row: TrackCsvRowRaw) => {
       if (!reportTrackExists) {
         const reportTrackPlayData: Partial<ReportTrackPlay> = {
           trackNameLabel: row.song,
-          albumNameLabel: row.album,
+          albumName: row.album,
+          artistName: row.artist_main,
           dateAttributes: {
             month,
             precision: DATE_PRECISION,

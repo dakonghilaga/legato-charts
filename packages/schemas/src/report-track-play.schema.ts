@@ -6,9 +6,10 @@ import { trackCsvRowSchema } from './track.schema';
 const reportTrackPlaySchemaPrimary = dbSchema
   .extend({
     trackNameLabel: z.string().min(1), // artist name(s) for display
-    albumNameLabel: z.string().min(1), // album name(s) for display
+    albumName: z.string().min(1),
+    artistName: z.string().min(1),
 
-    // denormalise data from track schema
+    // TODO: Add denormalise data from track schema
     track: z
       .object({
         _id: z.string().optional(),
@@ -16,7 +17,7 @@ const reportTrackPlaySchemaPrimary = dbSchema
       })
       .optional(),
 
-    // denormalise data from album schema
+    // TODO: Add denormalise data from album schema
     album: z
       .object({
         _id: z.string().optional(),

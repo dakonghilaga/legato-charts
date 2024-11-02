@@ -23,9 +23,10 @@ const trackSPrimarySchema = dbSchema
   .extend({
     name: z.string().min(1),
     artistNameLabel: z.string().min(1), // artist name(s) for display
-    albumNameLabel: z.string().min(1), // album name(s) for display
+    albumName: z.string().min(1),
+    artistName: z.string().min(1),
 
-    // denormalise data from album schema
+    // TODO: Add denormalise data from album schema
     album: z
       .object({
         _id: z.string().optional(),
@@ -34,7 +35,7 @@ const trackSPrimarySchema = dbSchema
       })
       .optional(),
 
-    // denormalise data from artist schema
+    // TODO: Add  denormalise data from artist schema
     mainArtists: z
       .array(
         z.object({

@@ -51,7 +51,8 @@ async function handler(ctx: AppKoaContext) {
       await trackService.insertOne({
         name: row.song,
         artistNameLabel: row.artist_name_label,
-        albumNameLabel: row.album,
+        artistName: row.artist_main,
+        albumName: row.album,
         dataSource: 'csv',
         dataSourceAttributes: row,
       });

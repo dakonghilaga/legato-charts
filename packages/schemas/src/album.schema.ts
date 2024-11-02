@@ -7,6 +7,7 @@ const albumSchemaPrimary = dbSchema
   .extend({
     name: z.string().min(1),
     releaseYear: z.coerce.number(),
+    artistName: z.string().min(1),
 
     dataSource: z.enum(['csv']).optional(),
   })
