@@ -1,4 +1,5 @@
 import { Track } from 'app-types';
+import _ from 'lodash';
 
 import db from 'db';
 
@@ -10,6 +11,26 @@ const service = db.createService<Track>(DATABASE_DOCUMENTS.TRACKS, {
   schemaValidator: (obj) => trackSchema.parseAsync(obj),
 });
 
+/**
+ *
+ * For text search, create an index in the 'tracks' collection:
+ * See: https://www.mongodb.com/docs/atlas/atlas-search/aggregation-stages/search/#aggregation-variable
+ *
+ * name: textSearch
+ * index definition: {
+ *   "mappings": {
+ *     "dynamic": false,
+ *     "fields": {
+ *       "artistName": { // field name to search
+ *         "type": "string",
+ *         "indexOptions": "offsets",
+ *         "store": true,
+ *         "norms": "include"
+ *       }
+ *     }
+ *   }
+ * }
+ * */
 const listTracks = async ({ page = 1, sort, filter, perPage = 10 }: MongoSearchFilters) => {
   const aggregationPipeline = [
     // sort stage
@@ -43,15 +64,47 @@ const listTracks = async ({ page = 1, sort, filter, perPage = 10 }: MongoSearchF
     },
   ] as unknown as [NonNullable<unknown>];
 
-  // match stage
+  // Start: match stage
+  const allowedTextFilters = ['artistName']; // Define allowed text filters
+  let buildTextSearchFilters: object = {};
+  const buildMatchFilters: unknown[] = [];
+
+  _.forEach(filter, (value, key) => {
+    // If allowed, transform the search filter to search syntax
+    if (_.includes(allowedTextFilters, key)) {
+      // TODO: This is a simple text search
+      // https://www.mongodb.com/docs/atlas/atlas-search/text/#std-label-text-ref
+      buildTextSearchFilters = {
+        $search: {
+          index: 'textSearch',
+          text: {
+            path: key,
+            query: value,
+          },
+        },
+      };
+    } else {
+      // If not allowed, push the $match stage
+      buildMatchFilters.push({ [key]: value });
+    }
+  });
+
+  const useAndClause = buildMatchFilters.length > 1;
+
   const matchStage = {
-    $match: filter,
+    $match: useAndClause ? { $and: buildMatchFilters } : buildMatchFilters[0],
   };
 
-  // match stage must be in the start of the pipeline
-  if (filter) {
+  // unshift: move match stage to the beginning of the pipeline
+  if (buildMatchFilters.length) {
     aggregationPipeline.unshift(matchStage);
   }
+
+  // splice: text search stage must be the first in the pipeline
+  if (!_.isEmpty(buildTextSearchFilters)) {
+    aggregationPipeline.splice(0, 0, buildTextSearchFilters);
+  }
+  // End: match stage
 
   const results = await service.aggregate(aggregationPipeline);
 

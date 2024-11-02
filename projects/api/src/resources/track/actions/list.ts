@@ -9,7 +9,6 @@ import { paginationSchema } from 'schemas';
 import { AppKoaContext, AppRouter } from 'types';
 
 const schema = paginationSchema.extend({
-  // override default sort
   sort: z
     .object({
       releaseYear: z
@@ -22,6 +21,7 @@ const schema = paginationSchema.extend({
   filter: z
     .object({
       releaseYear: z.coerce.number().optional(),
+      artistName: z.coerce.string().optional(),
     })
     .optional(),
 });
