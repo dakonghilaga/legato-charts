@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 const buildDateFilter = (month?: number, year = 2024, precision = 'month') => ({
   'dateAttributes.month': month,
   'dateAttributes.year': year,
@@ -46,7 +44,7 @@ const checkSupportedReport = (reportName: string) => Object.hasOwn(trackStatsRep
 function getTrackStatsPipeline<N extends keyof typeof trackStatsReports>(
   methodName: string,
 
-  // Ensures types for the arguments for the chose `method`
+  // Ensures types for the arguments of the chosen `method`
   ...args: Parameters<(typeof trackStatsReports)[N]>
 ) {
   // Store the function from picked from `trackStatsMethods` via `methodName`

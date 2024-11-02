@@ -2,13 +2,13 @@ import { reportTrackPlayService } from 'resources/report';
 
 import logger from 'logger';
 
-import { ReportTrackPlay, TrackCsvRow } from 'types';
+import { ReportTrackPlay, TrackCsvRowRaw } from 'types';
 
 const PRECISION_MONTH_PREFIX = 'total_plays_month_';
 const DATE_PRECISION = 'month';
 
 // Saves play count data
-const savePlayCountsWorkflow = async (row: TrackCsvRow) => {
+const savePlayCountsWorkflow = async (row: TrackCsvRowRaw) => {
   for await (const [key, value] of Object.entries(row)) {
     if (key.includes(PRECISION_MONTH_PREFIX)) {
       const extractedMonth = key.replace(PRECISION_MONTH_PREFIX, '');
@@ -18,7 +18,8 @@ const savePlayCountsWorkflow = async (row: TrackCsvRow) => {
 
       const reportTrackExists = await reportTrackPlayService.findOne({
         trackNameLabel: row.song,
-        albumNameLabel: row.album,
+        albumName: row.album,
+        artistName: row.artist_main,
         dateAttributes: {
           month,
           year,
@@ -33,7 +34,8 @@ const savePlayCountsWorkflow = async (row: TrackCsvRow) => {
       if (!reportTrackExists) {
         const reportTrackPlayData: Partial<ReportTrackPlay> = {
           trackNameLabel: row.song,
-          albumNameLabel: row.album,
+          albumName: row.album,
+          artistName: row.artist_main,
           dateAttributes: {
             month,
             precision: DATE_PRECISION,

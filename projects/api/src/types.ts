@@ -32,18 +32,19 @@ export type MongoSearchFilters = {
   page: number;
   sort: { [index: string]: number } | undefined;
   perPage: number;
+  filter?: { [index: string]: unknown } | undefined;
   searchValue?: string | undefined;
 };
 
-export type TrackCsvRow = {
+export type TrackCsvRowRaw = {
   song: string;
 
   /* eslint-disable @typescript-eslint/naming-convention */
   artist_name_label: string;
   artist_main: string;
   artist_others: string;
-  album_release_year: string;
-  year_counted: string;
+  album_release_year: number;
+  year_counted: number;
   /* eslint-enable @typescript-eslint/naming-convention */
 
   album: string;

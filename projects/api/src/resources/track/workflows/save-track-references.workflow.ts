@@ -6,7 +6,7 @@ import db from 'db';
 
 import logger from 'logger';
 
-import { TrackCsvRow } from 'types';
+import { TrackCsvRowRaw } from 'types';
 
 /**
  * Save to DB the track's referenced album, artist, writer
@@ -16,7 +16,7 @@ import { TrackCsvRow } from 'types';
  * TODO: Should separate each saves to a more testable structure
  * TODO: Should be a separate service / worker
  */
-const saveTrackReferencesWorkflow = async (row: TrackCsvRow) => {
+const saveTrackReferencesWorkflow = async (row: TrackCsvRowRaw) => {
   /** Save Album * */
   await db.withTransaction(async (session) => {
     const albumExists = await albumService.findOne(
@@ -37,6 +37,7 @@ const saveTrackReferencesWorkflow = async (row: TrackCsvRow) => {
       await albumService.insertOne(
         {
           name: row.album,
+          artistName: row.artist_main,
           releaseYear: Number(row.album_release_year),
           dataSource: 'csv',
           dataSourceAttributes: row,

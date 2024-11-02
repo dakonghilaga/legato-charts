@@ -1,28 +1,19 @@
 import { z } from 'zod';
 
 import dbSchema from './db.schema';
+import { trackCsvRowSchema } from './track.schema';
 
-export const reportTrackPlaySchema = dbSchema
+const reportTrackPlaySchemaPrimary = dbSchema
   .extend({
     trackNameLabel: z.string().min(1), // artist name(s) for display
-    albumNameLabel: z.string().min(1), // album name(s) for display
+    albumName: z.string().min(1),
+    artistName: z.string().min(1),
 
-    // denormalise data from track schema
-    track: z
-      .object({
-        _id: z.string().optional(),
-        name: z.string().optional(),
-      })
-      .optional(),
+    // TODO: Add denormalise data from track schema
+    track: z.object({}).optional(),
 
-    // denormalise data from album schema
-    album: z
-      .object({
-        _id: z.string().optional(),
-        name: z.string().optional(),
-        releaseYear: z.number().optional(),
-      })
-      .optional(),
+    // TODO: Add denormalise data from album schema
+    album: z.object({}).optional(),
 
     dateAttributes: z
       .object({
@@ -40,8 +31,7 @@ export const reportTrackPlaySchema = dbSchema
       .nonnegative(), //  >= 0
 
     dataSource: z.enum(['csv']).optional(),
-
-    // TODO: Preprocess types depending on data source value
-    dataSourceAttributes: z.record(z.string()),
   })
   .strict();
+
+export const reportTrackPlaySchema = reportTrackPlaySchemaPrimary.extend(trackCsvRowSchema.shape);

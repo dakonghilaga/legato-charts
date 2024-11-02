@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
 import dbSchema from './db.schema';
+import { trackCsvRowSchema } from './track.schema';
 
-export const artistSchema = dbSchema
+const artistSchemaPrimary = dbSchema
   .extend({
     name: z.string().min(1),
 
     dataSource: z.enum(['csv']).optional(),
-
-    // TODO: Preprocess types depending on data source value
-    dataSourceAttributes: z.record(z.string()),
   })
   .strict();
+
+export const artistSchema = artistSchemaPrimary.extend(trackCsvRowSchema.shape);
