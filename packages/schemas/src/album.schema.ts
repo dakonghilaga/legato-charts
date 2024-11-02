@@ -1,15 +1,15 @@
 import { z } from 'zod';
 
 import dbSchema from './db.schema';
+import { trackCsvRowSchema } from './track.schema';
 
-export const albumSchema = dbSchema
+const albumSchemaPrimary = dbSchema
   .extend({
     name: z.string().min(1),
     releaseYear: z.coerce.number(),
 
     dataSource: z.enum(['csv']).optional(),
-
-    // TODO: Preprocess types depending on data source value
-    dataSourceAttributes: z.record(z.string()),
   })
   .strict();
+
+export const albumSchema = albumSchemaPrimary.extend(trackCsvRowSchema.shape);

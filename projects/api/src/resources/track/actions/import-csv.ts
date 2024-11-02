@@ -6,7 +6,7 @@ import { csvFileImportService } from 'services';
 
 import logger from 'logger';
 
-import { AppKoaContext, AppRouter, Next, TrackCsvRow } from 'types';
+import { AppKoaContext, AppRouter, Next } from 'types';
 
 import savePlayCountsWorkflow from '../workflows/save-play-counts.workflow';
 import saveTrackReferencesWorkflow from '../workflows/save-track-references.workflow';
@@ -35,7 +35,7 @@ async function handler(ctx: AppKoaContext) {
   const parsedTracksRows = [];
 
   for await (const csvRow of parsedTracksPromises) {
-    const row = csvRow as TrackCsvRow;
+    const row = csvRow;
 
     const trackExists = await trackService.exists({
       name: row.song,
