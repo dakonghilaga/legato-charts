@@ -23,36 +23,16 @@ const trackSPrimarySchema = dbSchema
   .extend({
     name: z.string().min(1),
     artistNameLabel: z.string().min(1), // artist name(s) for display
-    albumName: z.string().min(1),
+    albumName: z.string().optional(),
     artistName: z.string().min(1),
 
     // TODO: Add denormalise data from album schema
-    album: z
-      .object({
-        _id: z.string().optional(),
-        name: z.string().optional(),
-        releaseYear: z.number().optional(),
-      })
-      .optional(),
+    album: z.object({}).optional(),
 
     // TODO: Add  denormalise data from artist schema
-    mainArtists: z
-      .array(
-        z.object({
-          _id: z.string().optional(),
-          name: z.string().optional(),
-        }),
-      )
-      .optional(),
+    mainArtists: z.array(z.object({}).optional()).optional(),
 
-    otherArtists: z
-      .array(
-        z.object({
-          _id: z.string().optional(),
-          name: z.string().optional(),
-        }),
-      )
-      .optional(),
+    otherArtists: z.array(z.object({}).optional()).optional(),
 
     dataSource: z.enum(['csv']).optional(),
   })

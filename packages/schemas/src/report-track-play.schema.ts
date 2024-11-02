@@ -10,21 +10,10 @@ const reportTrackPlaySchemaPrimary = dbSchema
     artistName: z.string().min(1),
 
     // TODO: Add denormalise data from track schema
-    track: z
-      .object({
-        _id: z.string().optional(),
-        name: z.string().optional(),
-      })
-      .optional(),
+    track: z.object({}).optional(),
 
     // TODO: Add denormalise data from album schema
-    album: z
-      .object({
-        _id: z.string().optional(),
-        name: z.string().optional(),
-        releaseYear: z.number().optional(),
-      })
-      .optional(),
+    album: z.object({}).optional(),
 
     dateAttributes: z
       .object({
