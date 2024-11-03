@@ -8,12 +8,19 @@ import logger from 'logger';
 
 import { AppKoaContext, AppRouter, Next } from 'types';
 
+import config from 'config';
 import savePlayCountsWorkflow from '../workflows/save-play-counts.workflow';
 import saveTrackReferencesWorkflow from '../workflows/save-track-references.workflow';
 
 const upload = multer();
 
 async function validator(ctx: AppKoaContext, next: Next) {
+  if (!config.FEATURE_IMPORT_CSV_ENABLED) {
+    ctx.status = 404;
+
+    return;
+  }
+
   const { file } = ctx.request;
 
   ctx.assertClientError(file, { global: 'File cannot be empty' });
