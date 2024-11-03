@@ -14,7 +14,10 @@ const service = db.createService<Track>(DATABASE_DOCUMENTS.TRACKS, {
 /**
  *
  * For text search, create an index in the 'tracks' collection:
- * See: https://www.mongodb.com/docs/atlas/atlas-search/aggregation-stages/search/#aggregation-variable
+ * See:
+ * - https://www.mongodb.com/docs/manual/reference/operator/aggregation/search/
+ * - https://www.mongodb.com/docs/atlas/atlas-search/tutorial/
+ * - https://www.mongodb.com/docs/atlas/atlas-search/aggregation-stages/search/#aggregation-variable
  *
  * name: textSearch
  * index definition: {
@@ -64,6 +67,7 @@ const listTracks = async ({ page = 1, sort, filter, perPage = 10 }: MongoSearchF
     },
   ] as unknown as [NonNullable<unknown>];
 
+  // TODO: Move to a separate util or middleware
   // Start: match stage
   const allowedTextFilters = ['artistName']; // Define allowed text filters
   let buildTextSearchFilters: object = {};
@@ -72,7 +76,7 @@ const listTracks = async ({ page = 1, sort, filter, perPage = 10 }: MongoSearchF
   _.forEach(filter, (value, key) => {
     // If allowed, transform the search filter to search syntax
     if (_.includes(allowedTextFilters, key)) {
-      // TODO: This is a simple text search
+      // TODO: Improve: This is a simple text search
       // https://www.mongodb.com/docs/atlas/atlas-search/text/#std-label-text-ref
       buildTextSearchFilters = {
         $search: {

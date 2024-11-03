@@ -1,38 +1,41 @@
 # Legato Charts
 ### Project monorepo for building products and services from music data.
 
-### Development Prerequisites
+##  1. Development
+### 1.1 Development Prerequisites
 
 * Code editor of choice
 * Docker https://www.docker.com/
 * PNPm https://pnpm.io/
 * Node.js https://nodejs.org/en
 
-### Install dependencies
+### 1.2 Install Dependencies
 
 ```bash
 pnpm i
 ```
 
-### Setup Husky Git hooks
+### 1.3 Setup Husky Git Hooks
 
 ```bash
 pnpm run prepare
 ```
 
-### Start the project
+### 1.4 Start the Project
 
 ```bash
 pnpm run start
 ```
 
-### Import Sample Data
+### 1.5 Import Sample Data
 ```curl
+# example 
+
 curl --location 'http://localhost:3001/tracks/import/csv' \
 --form 'file=@"/project-root/seed/sample-data.csv"'
 ```
 
-## Structure
+## 2. Structure
 ```text
 project-root/
 ├─ .husky/                # Husky Git hooks configs
@@ -49,3 +52,15 @@ project-root/
 ├─ README.md              # This file
 ├─ turbo.json             # Turbo repo config / pipeline
 ```
+
+## 3. Technologies
+* Node.js https://nodejs.org/en
+* Koa: https://koajs.com/
+* MongoDB: https://www.mongodb.com/
+* Redis: https://redis.io/
+* TypeScript: https://www.typescriptlang.org/
+* Docker: https://www.docker.com/
+* Turbo Repo: https://turbo.build/repo/docs
+
+## 4. Contributing
+* For the meantime, please search and check all `TODO`.

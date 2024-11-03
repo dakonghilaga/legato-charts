@@ -8,7 +8,7 @@ import { AppKoa } from 'types';
 
 import auth from './middlewares/auth.middleware';
 
-// TODO: basic auth middleware
+// TODO: Basic auth middleware
 export default (app: AppKoa) => {
   app.use(mount('/tracks', compose([auth, trackRoutes.privateRoutes])));
   app.use(mount('/reports', compose([auth, reportRoutes.privateRoutes])));
