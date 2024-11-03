@@ -6,8 +6,14 @@ import { AppKoaContext, Next } from 'types';
 const auth = (ctx: AppKoaContext, next: Next) => {
   const { apikey } = ctx.headers;
 
-  const isAllowed = config.DEMO_API_KEY === apikey && config.APP_ENV !== 'production';
-  if (apikey && isAllowed) {
+  const hasAccess = config.DEMO_API_KEY === apikey;
+  const isNonProd = config.APP_ENV !== 'production';
+
+  if (hasAccess && isNonProd) {
+    return next();
+  }
+
+  if (config.IS_DEV) {
     return next();
   }
 

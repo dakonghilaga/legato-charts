@@ -25,6 +25,13 @@ import logger from 'logger';
 import { AppKoa } from 'types';
 
 const initKoa = () => {
+  logger.warn(`
+    *********************************************************      
+    FIX THIS BEFORE GOING TO PRODUCTION:
+    -> projects/api/src/routes/middlewares/auth.middleware.ts
+    *********************************************************
+  `);
+
   const app = new AppKoa();
 
   app.proxy = true; // when true proxy header fields will be trusted
@@ -62,9 +69,7 @@ const app = initKoa();
   const server = http.createServer(app.callback());
 
   if (config.REDIS_URI) {
-    await redisClient
-      .connect()
-      .catch(redisErrorHandler);
+    await redisClient.connect().catch(redisErrorHandler);
   }
 
   server.listen(config.PORT, () => {
