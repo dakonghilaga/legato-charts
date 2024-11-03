@@ -1,0 +1,10 @@
+# https://docs.render.com/blueprint-spec
+services:
+  - type: web
+    name: legato-charts-api
+    runtime: docker
+    plan: free
+    dockerfilePath: projects/api/Dockerfile
+    buildFilter:
+      paths:
+        - projects/api/**
