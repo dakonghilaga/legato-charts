@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import dbSchema from './db.schema';
 
+// Unifies (unions /intersects) current supported entities: Album, Artist, Track, Writer, ReportTrackPlay
 export const trackCsvRowSchema = z
   .object({
     dataSourceAttributes: z

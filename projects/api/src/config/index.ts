@@ -16,6 +16,11 @@ const schema = z.object({
 
   REDIS_URI: z.string().optional(),
   REDIS_ERRORS_POLICY: z.enum(['throw', 'log']).default('log'),
+
+  DEMO_API_KEY: z.string().optional(),
+  FEATURE_IMPORT_CSV_ENABLED: z
+    .preprocess(() => process.env.FEATURE_IMPORT_CSV_ENABLED === 'true', z.boolean())
+    .default(false),
 });
 
 type Config = z.infer<typeof schema>;

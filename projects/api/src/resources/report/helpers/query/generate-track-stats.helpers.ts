@@ -1,19 +1,37 @@
-const buildDateFilter = (month?: number, year = 2024, precision = 'month') => ({
+interface DateFilter {
+  month?: number;
+  year?: number;
+  precision?: string;
+}
+
+interface Filters {
+  dateByPrecision?: DateFilter;
+  dimension?: string;
+}
+
+interface DimensionKeys {
+  artist: object;
+  track: object;
+  album: object;
+}
+
+const buildDateFilter = ({ month, year = 2024, precision = 'month' }: DateFilter) => ({
   'dateAttributes.month': month,
   'dateAttributes.year': year,
   'dateAttributes.precision': precision,
 });
 
-type DateFilter = {
-  month?: number;
-  year?: number;
+const dimensionKeys: DimensionKeys = {
+  artist: { artist: '$artistName' },
+  track: { track: '$trackNameLabel' },
+  album: { album: '$albumName' },
 };
 
 // TODO: Perhaps use a pipeline builder for more idiomatic query pipelines
 // eg: https://www.npmjs.com/package/mongodb-pipeline-builder
 const trackStatsReports = {
   // count overall total plays
-  totalPlaysCount: ({ month, year }: DateFilter = {}) => {
+  totalPlaysCount: ({ dateByPrecision }: Filters = {}) => {
     const pipeline = [
       {
         $group: {
@@ -24,10 +42,49 @@ const trackStatsReports = {
         },
       },
       { $project: { _id: 0 } },
+    ] as unknown as [NonNullable<unknown>]; // Type so we can push any objects in the pipeline
+
+    if (dateByPrecision) {
+      pipeline.unshift({ $match: buildDateFilter(dateByPrecision) });
+    }
+
+    return pipeline;
+  },
+
+  mostPopularByTrackPlays: ({ dimension, dateByPrecision }: Filters = {}) => {
+    if (!dimension) {
+      return [];
+    }
+
+    const getGroupId = dimensionKeys[dimension as keyof DimensionKeys];
+
+    const pipeline = [
+      {
+        $group: {
+          _id: getGroupId,
+          totalPlaysCount: {
+            $sum: '$totalPlays',
+          },
+        },
+      },
+      {
+        $sort: {
+          totalPlaysCount: -1,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          track: '$_id.track',
+          album: '$_id.album',
+          artist: '$_id.artist',
+          totalPlaysCount: 1,
+        },
+      },
     ] as unknown as [NonNullable<unknown>];
 
-    if (month) {
-      pipeline.unshift({ $match: buildDateFilter(month, year) });
+    if (dateByPrecision) {
+      pipeline.unshift({ $match: buildDateFilter(dateByPrecision) });
     }
 
     return pipeline;
