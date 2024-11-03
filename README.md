@@ -1,5 +1,5 @@
 # Legato Charts
-### Project monorepo for building products and services from music data.
+### Data analysis service for the music industry
 
 ##  1. Development
 ### 1.1 Development Prerequisites
@@ -64,3 +64,22 @@ project-root/
 
 ## 4. Contributing
 * For the meantime, please search and check all `TODO`.
+
+## 5. Documentation
+Documentation via Mintlify: https://mintlify.com/docs/quickstart
+
+### 5.1 Install Dependencies
+Install the Mintlify CLI to preview the documentation changes locally. To install, use the following command
+```bash
+pnpm i -g mintlify
+```
+
+### 5.2 Run Locally
+Run the following command at the root of your documentation (where mint.json is)
+
+```bash
+# mintlify dev
+pnpm run docs
+```
+
+A local preview of the documentation will be available at http://localhost:3000

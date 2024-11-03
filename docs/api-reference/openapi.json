@@ -1,0 +1,259 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Legato Charts API",
+    "description": "Data Analytics Service for the Music Industry",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://legato-charts-api.onrender.com/"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/tracks": {
+      "get": {
+        "description": "Returns all available tracks",
+        "parameters": [
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sort[artistName]",
+            "in": "query",
+            "description": "Sort by artist name",
+            "style": "deepObject",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["asc", "desc"]
+              },
+              "maximum": 1
+            }
+          },
+          {
+            "name": "sort[releaseYear]",
+            "in": "query",
+            "description": "Sort by album release year",
+            "style": "deepObject",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["asc", "desc"]
+              },
+              "maximum": 1
+            }
+          },
+          {
+            "name": "sort[albumName]",
+            "in": "query",
+            "description": "Sort by album name",
+            "style": "deepObject",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["asc", "desc"]
+              },
+              "maximum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Tracks response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "pagesCount": {
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Track"
+                      }
+                    }
+                  }
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/track/stats": {
+      "post": {
+        "description": "Request tracks reports",
+        "requestBody": {
+          "description": "Report to request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "required": [
+                      "reportName"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "reportName": {
+                        "oneOf": [
+                          {
+                            "enum": ["totalPlaysCount"],
+                            "description": "Get tracks' total play count"
+                          },
+                          {
+                            "enum": ["mostPopularByTrackPlays"],
+                            "description": "Get most played tracks, also by albums and artists"
+                          }
+                        ]
+                      },
+                      "filter": {
+                        "type": "object",
+                        "description": "NOTE: `filter.dimension` is only available for `mostPopularByTrackPlays`",
+                        "properties": {
+                          "dimension": {
+                            "oneOf": [
+                              {
+                                "enum": ["album"],
+                                "description": "Get number of played tracks by album"
+                              },
+                              {
+                                "enum": ["artists"],
+                                "description": "Get number played tracks by artist"
+                              },
+                              {
+                                "enum": ["artists"],
+                                "description": "Get number of played tracks"
+                              }
+                            ]
+                          },
+                          "dateByPrecision": {
+                            "type": "object",
+                            "description": "Filter report by date",
+                            "properties": {
+                              "month": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "year": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "precision": {
+                                "type": "string",
+                                "enum": ["month"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Reports response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "reportName": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "array"
+                    }
+                  }
+
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Track": {
+
+        "type": "object",
+        "properties": {
+
+          "_id": {
+            "description": "Track's ID",
+            "type": "string"
+          },
+          "name": {
+            "description": "Track Title",
+            "type": "string"
+          },
+          "artistNameLabel": {
+            "description": "Track Title (as listed)",
+            "type": "string"
+          },
+          "albumName": {
+            "description": "Track's Album Name",
+            "type": "string"
+          },
+          "artistName": {
+            "description": "Artist's Name",
+            "type": "string"
+          },
+          "releaseYear": {
+            "description": "Year the track released",
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional information "
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-demo-api-key"
+      }
+    }
+  }
+}
