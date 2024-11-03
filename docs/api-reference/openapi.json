@@ -150,11 +150,11 @@
                                 "description": "Get number of played tracks by album"
                               },
                               {
-                                "enum": ["artists"],
+                                "enum": ["artist"],
                                 "description": "Get number played tracks by artist"
                               },
                               {
-                                "enum": ["artists"],
+                                "enum": ["track"],
                                 "description": "Get number of played tracks"
                               }
                             ]
