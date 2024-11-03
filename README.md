@@ -83,3 +83,21 @@ pnpm run docs
 ```
 
 A local preview of the documentation will be available at http://localhost:3000
+
+## 6. Roadmap
+* Core offerings roadmap
+* API management web app
+* Security: AuthN, AuthZ, 2FA
+* Code coverage
+* Observability
+* Self-service API credentials
+* Music data aggregator services
+* Branding
+* Self-service subscription & user profiles
+* Plans & Payments
+* Email notifications
+* ML / LLM Integrations
+* Dashboards
+* Official website
+* IaC
+* Go-live checklist
