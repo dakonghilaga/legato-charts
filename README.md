@@ -64,3 +64,18 @@ project-root/
 
 ## 4. Contributing
 * For the meantime, please search and check all `TODO`.
+
+## 5. Documentation
+### 5.1 Install Dependencies
+Install the Mintlify CLI to preview the documentation changes locally. To install, use the following command
+```bash
+pnpm i -g mintlify
+```
+
+### 5.2 Run Locally
+Run the following command at the root of your documentation (where mint.json is)
+
+```bash
+# mintlify dev
+pnpm run docs
+```

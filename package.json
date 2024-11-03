@@ -1,11 +1,13 @@
 {
   "name": "legato-charts",
-  "license": "TBD",
+  "version": "0.0.1",
+  "license": "MIT",
   "scripts": {
     "start": "npm run setup | npm run turbo-start",
     "setup": "bash ./bin/setup.sh mongodb redis",
     "turbo-start": "turbo run development",
-    "prepare": "./node_modules/.bin/husky"
+    "prepare": "./node_modules/.bin/husky",
+    "docs": "cd docs && mintlify dev"
   },
   "devDependencies": {
     "husky": "9.1.6",
