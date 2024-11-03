@@ -4,6 +4,7 @@ services:
     name: legato-charts-api
     runtime: docker
     plan: free
+    region: singapore
     dockerfilePath: projects/api/Dockerfile
     buildFilter:
       paths:
