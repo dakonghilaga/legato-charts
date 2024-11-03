@@ -111,6 +111,103 @@
           }
         }
       }
+    },
+    "/reports/track/stats": {
+      "post": {
+        "description": "Request tracks reports",
+        "requestBody": {
+          "description": "Report to request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "required": [
+                      "reportName"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "reportName": {
+                        "oneOf": [
+                          {
+                            "enum": ["totalPlaysCount"],
+                            "description": "Get tracks' total play count"
+                          },
+                          {
+                            "enum": ["mostPopularByTrackPlays"],
+                            "description": "Get most played tracks, also by albums and artists"
+                          }
+                        ]
+                      },
+                      "filter": {
+                        "type": "object",
+                        "description": "NOTE: `filter.dimension` is only available for `mostPopularByTrackPlays`",
+                        "properties": {
+                          "dimension": {
+                            "oneOf": [
+                              {
+                                "enum": ["album"],
+                                "description": "Get number of played tracks by album"
+                              },
+                              {
+                                "enum": ["artists"],
+                                "description": "Get number played tracks by artist"
+                              },
+                              {
+                                "enum": ["artists"],
+                                "description": "Get number of played tracks"
+                              }
+                            ]
+                          },
+                          "dateByPrecision": {
+                            "type": "object",
+                            "description": "Filter report by date",
+                            "properties": {
+                              "month": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "year": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "precision": {
+                                "type": "string",
+                                "enum": ["month"]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Reports response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "reportName": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "array"
+                    }
+                  }
+
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

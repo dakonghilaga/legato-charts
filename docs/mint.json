@@ -24,7 +24,8 @@
     {
       "group": "API Reference",
       "pages": [
-        "api-reference/endpoint/get-all-tracks"
+        "api-reference/endpoint/get-all-tracks",
+        "api-reference/endpoint/reports-track-stats"
       ]
     }
   ]
