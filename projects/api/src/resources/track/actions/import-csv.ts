@@ -4,11 +4,12 @@ import { trackService } from 'resources/track';
 
 import { csvFileImportService } from 'services';
 
+import config from 'config';
+
 import logger from 'logger';
 
 import { AppKoaContext, AppRouter, Next } from 'types';
 
-import config from 'config';
 import savePlayCountsWorkflow from '../workflows/save-play-counts.workflow';
 import saveTrackReferencesWorkflow from '../workflows/save-track-references.workflow';
 
