@@ -66,7 +66,7 @@ project-root/
 * For the meantime, please search and check all `TODO`.
 
 ## 5. Documentation
-Documentation via Mintlify: https://mintlify.com/docs/quickstart
+Built with Mintlify: https://mintlify.com/docs/quickstart
 
 ### 5.1 Install Dependencies
 Install the Mintlify CLI to preview the documentation changes locally. To install, use the following command
@@ -84,8 +84,11 @@ pnpm run docs
 
 A local preview of the documentation will be available at http://localhost:3000
 
+For the API document structure, please refer to `docs/api-reference/openapi.json`
+
 ## 6. Roadmap
 * Core offerings roadmap
+* Branding
 * API management web app
 * Security: AuthN, AuthZ, 2FA
 * Code coverage
@@ -93,7 +96,6 @@ A local preview of the documentation will be available at http://localhost:3000
 * Observability
 * Self-service API credentials
 * Music data aggregator services
-* Branding
 * Self-service subscription
 * API users profiles
 * Plans & Payments
