@@ -89,14 +89,16 @@ A local preview of the documentation will be available at http://localhost:3000
 * API management web app
 * Security: AuthN, AuthZ, 2FA
 * Code coverage
+* E2E, automation tests, load tests, etc
 * Observability
 * Self-service API credentials
 * Music data aggregator services
 * Branding
-* Self-service subscription & user profiles
+* Self-service subscription
+* API users profiles
 * Plans & Payments
 * Email notifications
-* ML / LLM Integrations
+* ML / LLM feature integrations
 * Dashboards
 * Official website
 * IaC
