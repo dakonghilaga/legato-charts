@@ -110,7 +110,18 @@ const listTracks = async ({ page, sort, filter, perPage }: MongoSearchFilters) =
   }
   // End: match stage
 
-  const results = await service.aggregate(aggregationPipeline);
+  const results = await service.aggregate(aggregationPipeline, {
+    /**
+     * TODO: Improve: Quick fix for sorting by "names" for now.
+     * - By default, strings are sorted by their binary values
+     * - But to support non-EN alphabet, might need to add another sortable field
+     * - Or dynamic collation by locale:
+     *    - https://www.mongodb.com/docs/manual/reference/collation-locales-defaults/
+     */
+    collation: {
+      locale: 'en',
+    },
+  });
 
   const count = results[0]?.metadata.currentCount;
   const pagesCount: number = Math.floor(count / perPage) || 1;
