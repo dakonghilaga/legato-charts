@@ -34,7 +34,7 @@ const service = db.createService<Track>(DATABASE_DOCUMENTS.TRACKS, {
  *   }
  * }
  * */
-const listTracks = async ({ page = 1, sort, filter, perPage = 10 }: MongoSearchFilters) => {
+const listTracks = async ({ page, sort, filter, perPage }: MongoSearchFilters) => {
   const aggregationPipeline = [
     // sort stage
     { $sort: sort || { releaseYear: -1 } },

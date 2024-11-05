@@ -24,6 +24,8 @@ const schema = paginationSchema.extend({
       artistName: z.coerce.string().optional(),
     })
     .optional(),
+  page: z.coerce.number().min(1).optional().default(1),
+  perPage: z.coerce.number().min(1).max(20).optional().default(10),
 });
 
 type ValidatedData = z.infer<typeof schema>;
