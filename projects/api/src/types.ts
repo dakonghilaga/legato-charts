@@ -50,5 +50,5 @@ export type TrackCsvRowRaw = {
   album: string;
   writer: string;
 } & {
-  [k in `total_plays_month_${string}`]: string;
+  [k in `total_plays_month_${string}`]: number;
 };
