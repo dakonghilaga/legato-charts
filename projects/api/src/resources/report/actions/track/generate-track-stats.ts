@@ -40,9 +40,6 @@ interface ValidatedData extends z.infer<typeof schema> {
 }
 
 async function validator(ctx: AppKoaContext<ValidatedData>, next: Next) {
-  const isRequestContentTypeSupported = ctx.is('application/json');
-  ctx.assertClientError(isRequestContentTypeSupported, { global: 'Content type is not supported.' }, 415);
-
   const { reportName, filter } = (ctx.request.body as ValidatedData) || {};
 
   const isSupportedReport = checkSupportedReport(reportName);
