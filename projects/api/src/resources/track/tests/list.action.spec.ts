@@ -13,17 +13,12 @@ jest.mock('resources/track', () => ({
 
 const mockListTracks = trackService.listTracks as jest.Mock;
 
+const app = new Koa();
+const router = new Router();
+route(router);
+app.use(router.routes());
+
 describe('GET /tracks', () => {
-  let app: Koa;
-  let router: Router;
-
-  beforeEach(() => {
-    router = new Router();
-    route(router);
-    app = new Koa();
-    app.use(router.routes());
-  });
-
   it('should validate query parameters and call trackService.listTracks', async () => {
     const mockedTracksData = [
       {
