@@ -112,4 +112,4 @@ function getTrackStatsPipeline<N extends keyof typeof trackStatsReports>(
   return invokedMethod(...args) as [object, ...object[]];
 }
 
-export { checkSupportedReport, getTrackStatsPipeline };
+export { buildDateFilter, checkSupportedReport, getTrackStatsPipeline, trackStatsReports };
