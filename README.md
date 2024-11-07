@@ -86,7 +86,14 @@ A local preview of the documentation will be available at http://localhost:3000
 
 For the API document structure, please refer to `docs/api-reference/openapi.json`
 
-## 6. Roadmap
+## 6. Tests
+For the meantime, API is the only project at this stage. To run:
+```bash
+cd project-root/api
+pnpm run test
+```
+
+## 7. Roadmap
 * Core offerings roadmap
 * Branding
 * API management web app

@@ -12,6 +12,9 @@ const config = {
   modulePaths: ['src'],
   moduleDirectories: ['node_modules'],
   testTimeout: 10000,
+
+  // setup env
+  setupFiles: ['dotenv/config'],
 };
 
 module.exports = config;
